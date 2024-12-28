@@ -1,6 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "prometheus",
+	"provides": ["ecu", "prometheus-essential"],
 	"version": "${project.version}",
 	"environment": "client",
 	"name": "Prometheus",
@@ -9,6 +10,11 @@
 		"dxxxxy"
 	],
 	"license": "GPL-3.0",
+	"contact": {
+     "issues": "https://github.com/prometheusreengineering/essential/issues",
+     "sources": "https://github.com/prometheusreengineering/essential",
+     "discord": "https://discord.gg/zXFKGhRKZQ"
+ },
 	"icon": "assets/prometheus/icon.png",
 	"mixins": [
 		"prometheus.mixins.json"
@@ -16,5 +22,20 @@
 	"depends": {
 		"minecraft": ">=1.16.5",
 		"java": ">=8"
+	},
+	"breaks": {
+		"viafabricplus": "*",
+		"capes": "*"
+	},
+	"custom": {
+		"modmenu" : {
+        "parent": {
+            "id": "essential"
+         },
+         "links" : {
+             "modmenu.discord": "https://discord.gg/zXFKGhRKZQ",
+             "modmenu.github_releases": "https://github.com/prometheusreengineering/essential/releases"
+      }
+   }
 	}
 }
