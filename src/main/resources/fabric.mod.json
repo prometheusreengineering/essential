@@ -18,13 +18,13 @@
     "mixins": [
         "prometheus.mixins.json"
     ],
+    "entrypoints": {
+        "client": ["studio.dreamys.prometheus.Prometheus"]
+    },
     "depends": {
         "minecraft": ">=1.16.5",
-        "java": ">=8"
-    },
-    "breaks": {
-        "viafabricplus": "*",
-        "capes": "*"
+        "java": ">=8",
+        "essential-loader": "*"
     },
     "custom": {
         "modmenu": {
