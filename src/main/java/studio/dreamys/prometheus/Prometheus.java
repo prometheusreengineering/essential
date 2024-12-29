@@ -2,37 +2,29 @@ package studio.dreamys.prometheus;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.MixinEnvironment;
-import org.spongepowered.asm.mixin.Mixins;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Prometheus implements ClientModInitializer {
+    private static final Logger LOGGER = LogManager.getLogger(Prometheus.class);
     FilenameFilter isJar = (dir, name) -> name.endsWith(".jar");
     @Override
     public void onInitializeClient() {
-        System.out.println("Test from prometheus");
+        LOGGER.debug("Prometheus is initializing");
         if (!FabricLoader.getInstance().isModLoaded("essential-container") && FabricLoader.getInstance().isModLoaded("essential")) {
-            System.out.println("Essential is already loaded");
+            LOGGER.warn("Essential is already loaded, skipping symlink creation");
             return;
         }
         File modsDir = new File("mods");
         assert modsDir.exists();
         Path essentialDir = modsDir.toPath().toAbsolutePath().getParent().resolve("essential");
-        System.out.println("Essential Directory: " + essentialDir.toAbsolutePath());
+        LOGGER.debug("Essential Directory: {}", essentialDir.toAbsolutePath());
         Path symlinkJarPath = modsDir.toPath();
         // Create symlink
         if (!essentialDir.toFile().exists()) {
@@ -42,11 +34,11 @@ public class Prometheus implements ClientModInitializer {
             try {
                 Path symlinkJar = symlinkJarPath.resolve(file.getName());
                 if (symlinkJar.toFile().exists()) {
-                    System.out.println("Symlink already exists: " + symlinkJar.toAbsolutePath());
+                    LOGGER.warn("Symlink already exists: {}", symlinkJar.toAbsolutePath());
                     break;
                 }
                 Files.createSymbolicLink(symlinkJar, file.toPath());
-                System.out.println("Created symlink: " + symlinkJar.toAbsolutePath());
+                LOGGER.info("Created symlink: {}", symlinkJar.toAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
             }
