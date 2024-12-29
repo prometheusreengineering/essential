@@ -26,10 +26,6 @@
         "java": ">=8",
         "essential-loader": "*"
     },
-    "breaks": {
-        "viafabricplus": "*",
-        "capes": "*"
-    },
     "custom": {
         "modmenu": {
             "parent": {
