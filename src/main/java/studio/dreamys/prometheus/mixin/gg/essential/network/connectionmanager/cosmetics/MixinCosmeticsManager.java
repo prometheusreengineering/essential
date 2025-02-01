@@ -1,4 +1,4 @@
-package studio.dreamys.prometheus.mixin.gg.essential.network.connectionmanager;
+package studio.dreamys.prometheus.mixin.gg.essential.network.connectionmanager.cosmetics;
 
 import gg.essential.event.client.ClientTickEvent;
 import gg.essential.network.connectionmanager.cosmetics.CosmeticsManager;
