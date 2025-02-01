@@ -1,8 +1,12 @@
-[{
-  "modid": "prometheus",
-  "name": "Prometheus",
-  "description": "The prometheus' patch for Essential Mod.",
-  "version": "${project.version}",
-  "authorList": ["dxxxxy"],
-  "logoFile": "assets/prometheus/icon.png"
-}]
+[
+    {
+        "modid": "prometheus",
+        "name": "Prometheus",
+        "description": "The prometheus' patch for Essential Mod.",
+        "version": "${project.version}",
+        "authorList": [
+            "dxxxxy"
+        ],
+        "logoFile": "assets/prometheus/icon.png"
+    }
+]

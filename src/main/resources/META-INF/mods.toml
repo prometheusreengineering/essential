@@ -1,24 +1,24 @@
-modLoader="lowcodefml"
-loaderVersion="[36,)"
-license="GPL-3.0"
+modLoader = "lowcodefml"
+loaderVersion = "[25,)"
+license = "GPL-3.0"
 
 [[mods]]
-modId="prometheus"
-version="0.0.0" # not to be updated since the forge folks like to enforce strict versioning </3
-displayName="Prometheus"
+modId = "prometheus"
+version = "0.0.0" # not to be updated since the forge folks like to enforce strict versioning </3
+displayName = "Prometheus"
 description = "The prometheus' patch for Essential Mod."
 logoFile = "assets/prometheus/icon.png"
 features = { java_version = "[8,)" }
 authors = ["dxxxxy"]
 
 [[dependencies.prometheus]]
-modId="forge"
-mandatory=true
-versionRange="[36,)"
+modId = "forge"
+mandatory = true
+versionRange = "[25,)"
 side = "CLIENT"
 
 [[dependencies.prometheus]]
-modId="minecraft"
-mandatory=true
-versionRange="[1.16.5,)"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.13,)"
 side = "CLIENT"
