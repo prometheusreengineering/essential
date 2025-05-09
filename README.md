@@ -1,6 +1,3 @@
-# BROKEN AS OF MAY 9th 2025
-### Either downgrade to essential v1.3.5.11 or wait for a fix.
-
 # essential
 The prometheus' patch for Essential Mod.
 
