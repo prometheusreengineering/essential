@@ -13,7 +13,7 @@ public abstract class MixinCosmeticsManager {
     @Shadow
     public abstract void unlockAllCosmetics();
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/CompletableFuture;complete(Ljava/lang/Object;)Z", shift = At.Shift.AFTER))
+    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lgg/essential/gui/elementa/state/v2/MutableState;set(Ljava/lang/Object;)V", shift = At.Shift.AFTER))
     public void onTick(ClientTickEvent tickEvent, CallbackInfo ci) {
         unlockAllCosmetics();
     }
