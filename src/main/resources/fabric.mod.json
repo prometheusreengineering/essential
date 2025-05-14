@@ -6,7 +6,8 @@
     "name": "Prometheus",
     "description": "The prometheus' patch for Essential Mod.",
     "authors": [
-        "dxxxxy"
+        "dxxxxy",
+        "Cootshk"
     ],
     "license": "GPL-3.0",
     "contact": {

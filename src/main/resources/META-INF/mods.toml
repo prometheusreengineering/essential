@@ -9,7 +9,7 @@ displayName = "Prometheus"
 description = "The prometheus' patch for Essential Mod."
 logoFile = "assets/prometheus/icon.png"
 features = { java_version = "[8,)" }
-authors = ["dxxxxy"]
+authors = ["dxxxxy", "Cootshk"]
 
 [[dependencies.prometheus]]
 modId = "forge"
