@@ -3,7 +3,6 @@ loaderVersion = "[1,)" # NF uses lowcodefml version 1
 license = "GPL-3.0"
 issueTrackerURL = "https://github.com/prometheusreengineering/essential/issues"
 
-
 [[mods]]
 modId = "prometheus"
 version = "0.0.0" # using anything other than strict SemVer will crash minecraft
@@ -23,12 +22,6 @@ reason = "essential seems to use the same mod id for stage0, 1, and 2"
 type = "optional"
 ordering="AFTER"
 versionRange = "[1.3.6.0,)"
-
-# [[dependencies.prometheus]]
-# modId = "forge"
-# mandatory = true
-# versionRange = "[25,)"
-# side = "CLIENT"
 
 [[dependencies.prometheus]]
 modId = "minecraft"
