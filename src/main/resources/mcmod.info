@@ -5,7 +5,8 @@
         "description": "The prometheus' patch for Essential Mod.",
         "version": "${project.version}",
         "authorList": [
-            "dxxxxy"
+            "dxxxxy",
+            "Cootshk",
         ],
         "logoFile": "assets/prometheus/icon.png"
     }
