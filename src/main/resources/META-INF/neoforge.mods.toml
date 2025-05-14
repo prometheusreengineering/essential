@@ -1,0 +1,37 @@
+modLoader = "lowcodefml"
+loaderVersion = "[1,)" # NF uses lowcodefml version 1
+license = "GPL-3.0"
+issueTrackerURL = "https://github.com/prometheusreengineering/essential/issues"
+
+
+[[mods]]
+modId = "prometheus"
+version = "${project.version}"
+displayName = "Prometheus"
+description = "The prometheus' patch for Essential Mod."
+logoFile = "assets/prometheus/icon.png"
+features = { java_version = "[8,)" }
+displayURL = "https://github.com/prometheusreengineering/essential"
+authors = ["dxxxxy", "Cootshk"]
+
+[[mixins]]
+config = "prometheus.mixins.json"
+
+[[dependencies.prometheus]]
+modId = "essential"
+reason = "essential seems to use the same mod id for stage0, 1, and 2"
+type = "optional"
+ordering="AFTER"
+versionRange = "[1.3.6.0,)"
+
+# [[dependencies.prometheus]]
+# modId = "forge"
+# mandatory = true
+# versionRange = "[25,)"
+# side = "CLIENT"
+
+[[dependencies.prometheus]]
+modId = "minecraft"
+type = "required"
+# versionRange = "[1.13,)"
+side = "CLIENT"
