@@ -6,7 +6,7 @@ issueTrackerURL = "https://github.com/prometheusreengineering/essential/issues"
 
 [[mods]]
 modId = "prometheus"
-version = "${project.version}"
+version = "0.0.0" # using anything other than strict SemVer will crash minecraft
 displayName = "Prometheus"
 description = "The prometheus' patch for Essential Mod."
 logoFile = "assets/prometheus/icon.png"
