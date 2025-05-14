@@ -23,10 +23,6 @@
         "minecraft": ">=1.16.5",
         "java": ">=8"
     },
-    "breaks": {
-        "viafabricplus": "*",
-        "capes": "*"
-    },
     "custom": {
         "modmenu": {
             "parent": {
