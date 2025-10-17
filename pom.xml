@@ -75,7 +75,7 @@
         <dependency>
             <groupId>gg.essential</groupId>
             <artifactId>essential</artifactId>
-            <version>1.3.6.1</version>
+            <version>1.3.9.2</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/essential.mock.jar</systemPath>
         </dependency>
@@ -88,29 +88,33 @@
         </dependency>
         <dependency>
             <groupId>gg.essential</groupId>
-            <artifactId>essential-stage0</artifactId>
-            <version>1.0.0</version>
-            <type>system</type>
-            <systemPath>${project.basedir}/lib/essential-stage0.mock.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>gg.essential</groupId>
             <artifactId>essential-stage1</artifactId>
             <version>1.0.0</version>
-            <type>system</type>
+            <scope>system</scope>
             <systemPath>${project.basedir}/lib/essential-stage1.mock.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>gg.essential</groupId>
             <artifactId>essential-stage2</artifactId>
             <version>1.6.6</version>
-            <type>system</type>
+            <scope>system</scope>
             <systemPath>${project.basedir}/lib/essential-stage2.mock.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>de.florianmichael</groupId>
             <artifactId>asmfabricloader</artifactId>
             <version>1.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-test</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -151,6 +155,64 @@
                     <accessWidenerPath>src/main/resources/prometheus.accessWidener</accessWidenerPath>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirs>
+                                <source>src/main/java</source>
+                                <source>src/main/java</source>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jvmTarget>1.8</jvmTarget>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>default-testCompile</id>
+                        <phase>none</phase>
+                    </execution>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 
@@ -158,5 +220,6 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.version>1.9.22</kotlin.version>
     </properties>
 </project>
