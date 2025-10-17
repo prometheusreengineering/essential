@@ -1,13 +1,21 @@
 package studio.dreamys.prometheus;
 
 import de.florianmichael.asmfabricloader.api.event.PrePrePreLaunchEntrypoint;
+import gg.essential.asm.compat.PhosphorTransformer;
+import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mixins;
+import studio.dreamys.prometheus.util.ChainLoadMixins;
 import studio.dreamys.prometheus.util.LoaderInternals;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicReference;
@@ -20,7 +28,9 @@ public class Prometheus implements PrePrePreLaunchEntrypoint, PreLaunchEntrypoin
     @Override
     public void onLanguageAdapterLaunch() {
         // Load everything here so we beat mixins
-        if (FabricLoader.getInstance().getModContainer("essential").isPresent()) return;
+
+        // TODO: remove
+        if (!FabricLoader.getInstance().getModContainer("essential").isPresent()) return;
 
         // Get the name of the essential stage2 jar
         AtomicReference<String> mcVersion = new AtomicReference<>("unknown");
@@ -64,6 +74,15 @@ public class Prometheus implements PrePrePreLaunchEntrypoint, PreLaunchEntrypoin
 
     @Override
     public void onPreLaunch() {
+        MixinBootstrap.init();
+        Mixins.addConfiguration("prometheus.mixins.json");
+        System.out.println("getUnvisitedCount() = " + Mixins.getUnvisitedCount());
+        try {
+            ChainLoadMixins.chainLoadMixins();
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+
         // we are currently blocking essential from loading its stage0, maybe load their updater here?
     }
 }
