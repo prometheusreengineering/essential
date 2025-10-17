@@ -77,9 +77,8 @@ public class LoaderInternals {
             ModMetadata var35;
             try (InputStream in = Files.newInputStream(fabricJson)) {
                 try {
-                    ModMetadata var7 = (ModMetadata)ModMetadataParser.getDeclaredMethod("parseMetadata", InputStream.class, String.class, List.class).invoke((Object)null, in, modPath.toString(), Collections.emptyList());
-                    return var7;
-                } catch (NoSuchMethodException var27) {
+                    return (ModMetadata) ModMetadataParser.getDeclaredMethod("parseMetadata", InputStream.class, String.class, List.class).invoke((Object)null, in, modPath.toString(), Collections.emptyList());
+                } catch (NoSuchMethodException ignored) {
                 }
 
                 try {
@@ -93,8 +92,7 @@ public class LoaderInternals {
                     Class<?> DependencyOverrides = this.findImplClass("metadata.DependencyOverrides");
                     Object versionOverrides = VersionOverrides.getConstructor().newInstance();
                     Object dependencyOverrides = DependencyOverrides.getConstructor(Path.class).newInstance(Paths.get("_invalid_"));
-                    ModMetadata var13 = (ModMetadata)ModMetadataParser.getDeclaredMethod("parseMetadata", InputStream.class, String.class, List.class, VersionOverrides, DependencyOverrides, Boolean.TYPE).invoke((Object)null, in, modPath.toString(), Collections.emptyList(), versionOverrides, dependencyOverrides, FabricLoader.getInstance().isDevelopmentEnvironment());
-                    return var13;
+                    return (ModMetadata)ModMetadataParser.getDeclaredMethod("parseMetadata", InputStream.class, String.class, List.class, VersionOverrides, DependencyOverrides, Boolean.TYPE).invoke((Object)null, in, modPath.toString(), Collections.emptyList(), versionOverrides, dependencyOverrides, FabricLoader.getInstance().isDevelopmentEnvironment());
                 }
             }
 
@@ -118,7 +116,7 @@ public class LoaderInternals {
             Method getInMemoryFs = ModResolver.getDeclaredMethod("getInMemoryFs");
             Method remap = RuntimeModRemapper.getDeclaredMethod("remap", Collection.class, FileSystem.class);
             Method getOriginUrl = ModCandidate.getDeclaredMethod("getOriginUrl");
-            FileSystem fileSystem = (FileSystem)getInMemoryFs.invoke((Object)null);
+            FileSystem fileSystem = (FileSystem)getInMemoryFs.invoke(null);
             Object result = remap.invoke((Object)null, Collections.singleton(candidate), fileSystem);
             Object remappedCandidate = ((Collection)result).iterator().next();
             URL remappedUrl = (URL)getOriginUrl.invoke(remappedCandidate);
@@ -126,7 +124,7 @@ public class LoaderInternals {
             try (InputStream in = remappedUrl.openStream()) {
                 Files.copy(in, outputPath, new CopyOption[0]);
             }
-        } catch (NoSuchMethodException var43) {
+        } catch (NoSuchMethodException e) {
             Method remap = RuntimeModRemapper.getDeclaredMethod("remap", Collection.class, Path.class, Path.class);
             Path tmpDir = Files.createTempDirectory("remap-tmp");
             Path outDir = Files.createTempDirectory("remap-out");
@@ -140,14 +138,14 @@ public class LoaderInternals {
                     resultPath = (Path)getPath.invoke(candidate);
                 } catch (NoSuchMethodException var37) {
                     Method getPaths = ModCandidate.getDeclaredMethod("getPaths");
-                    List<Path> paths = (List)getPaths.invoke(candidate);
+                    List<Path> paths = (List) getPaths.invoke(candidate);
                     resultPath = (Path)paths.get(0);
                 }
 
                 Files.move(resultPath, outputPath);
             } finally {
-                MoreFiles.deleteRecursively(tmpDir, new RecursiveDeleteOption[]{RecursiveDeleteOption.ALLOW_INSECURE});
-                MoreFiles.deleteRecursively(outDir, new RecursiveDeleteOption[]{RecursiveDeleteOption.ALLOW_INSECURE});
+                MoreFiles.deleteRecursively(tmpDir, RecursiveDeleteOption.ALLOW_INSECURE);
+                MoreFiles.deleteRecursively(outDir, RecursiveDeleteOption.ALLOW_INSECURE);
             }
         }
 

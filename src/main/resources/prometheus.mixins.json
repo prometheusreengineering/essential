@@ -2,6 +2,7 @@
     "required": true,
     "package": "studio.dreamys.prometheus.mixin",
     "compatibilityLevel": "JAVA_8",
+    "plugin": "studio.dreamys.prometheus.mixin.MixinPlugin",
     "mixins": [
         "gg.essential.network.connectionmanager.cosmetics.MixinCosmeticsManager",
         "gg.essential.network.connectionmanager.handler.cosmetics.MixinServerCosmeticsPopulatePacketHandler"
