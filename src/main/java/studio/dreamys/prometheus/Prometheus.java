@@ -1,88 +1,40 @@
 package studio.dreamys.prometheus;
 
-import de.florianmichael.asmfabricloader.api.event.PrePrePreLaunchEntrypoint;
-import gg.essential.asm.compat.PhosphorTransformer;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
-import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.Mixins;
-import studio.dreamys.prometheus.util.ChainLoadMixins;
-import studio.dreamys.prometheus.util.LoaderInternals;
 
-import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class Prometheus implements PrePrePreLaunchEntrypoint, PreLaunchEntrypoint {
+public class Prometheus implements PreLaunchEntrypoint {
     private static final Logger logger = LogManager.getLogger("Prometheus");
-
-    LoaderInternals loaderInternals = new LoaderInternals(this.getClass().getClassLoader(), logger);
-
-    @Override
-    public void onLanguageAdapterLaunch() {
-        // Load everything here so we beat mixins
-
-        // TODO: remove
-        if (!FabricLoader.getInstance().getModContainer("essential").isPresent()) return;
-
-        // Get the name of the essential stage2 jar
-        AtomicReference<String> mcVersion = new AtomicReference<>("unknown");
-        logger.debug("Getting minecraft version!");
-        FabricLoader.getInstance().getModContainer("minecraft").ifPresent(modContainer -> {
-            mcVersion.set(modContainer.getMetadata().getVersion().getFriendlyString());
-        });
-        String jarName = "Essential (fabric_" + mcVersion.get() + ").jar";
-        logger.info("Loading essential jar: {}", jarName);
-        File essentialJar = new File(FabricLoader.getInstance().getGameDir().toFile(), "essential/" + jarName);
-        if (!essentialJar.exists()) {
-            logger.warn("Essential jar not found! Expected at: {}", essentialJar.getAbsolutePath());
-            return;
-        }
-        URI u = essentialJar.toURI();
-
-        try {
-            loaderInternals.addToClassLoader(u.toURL());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        // TODO: use {@link LoaderInternals} to apply our patches
-        /*
-        try {
-            ClassLoaders.addToSystemClassPath(u.toURL());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-        Class.forName("gg.essential.loader.stage2.EssentialLoader", true, classLoader).getConstructor(Path.class, String.class).newInstance(gameDir, this.gameVersion).getClass().getMethod("load").invoke(this.stage2);
-        /*
-        URLClassLoader urlClassLoader = null;
-        try {
-            urlClassLoader = new URLClassLoader(new URL[]{u.toURL()}, this.getClass().getClassLoader());
-            urlClassLoader.loadClass("gg.essential.network.connectionmanager.cosmetics.CosmeticsManager");
-            urlClassLoader.loadClass("gg.essential.network.connectionmanager.handler.cosmetics.ServerCosmeticsPopulatePacketHandler");
-        } catch (Exception e) {
-            logger.error("Failed to load essential jar to classpath!", e);
-        }
-        /**///
-    }
-
     @Override
     public void onPreLaunch() {
         MixinBootstrap.init();
         Mixins.addConfiguration("prometheus.mixins.json");
-        System.out.println("getUnvisitedCount() = " + Mixins.getUnvisitedCount());
+        logger.debug("getUnvisitedCount() = {}", Mixins.getUnvisitedCount());
         try {
-            ChainLoadMixins.chainLoadMixins();
+            chainLoadMixins();
         } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e);
+            logger.error("Failed to chain load mixins", e);
         }
+    }
 
-        // we are currently blocking essential from loading its stage0, maybe load their updater here?
+    // Shoutout to Essential's loader code for this method
+    public static void chainLoadMixins() throws ReflectiveOperationException {
+        if (Mixins.getUnvisitedCount() != 0) {
+            MixinEnvironment environment = MixinEnvironment.getDefaultEnvironment();
+            Object transformer = environment.getActiveTransformer();
+            Field processorField = transformer.getClass().getDeclaredField("processor");
+            processorField.setAccessible(true);
+            Object processor = processorField.get(transformer);
+            Method select = processor.getClass().getDeclaredMethod("select", MixinEnvironment.class);
+            select.setAccessible(true);
+            select.invoke(processor, environment);
+        }
     }
 }

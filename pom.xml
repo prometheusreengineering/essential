@@ -66,11 +66,6 @@
             <artifactId>fabric-loader</artifactId>
             <version>0.16.14</version>
         </dependency>
-        <dependency>
-            <groupId>net.fabricmc</groupId>
-            <artifactId>access-widener</artifactId>
-            <version>2.1.0</version>
-        </dependency>
 
         <dependency>
             <groupId>gg.essential</groupId>
@@ -79,6 +74,7 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/essential.mock.jar</systemPath>
         </dependency>
+        <!-- Essential Loader deps (uncomment for development)
         <dependency>
             <groupId>gg.essential</groupId>
             <artifactId>essential-loader</artifactId>
@@ -116,6 +112,7 @@
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
+        -->
     </dependencies>
 
     <build>
@@ -155,6 +152,7 @@
                     <accessWidenerPath>src/main/resources/prometheus.accessWidener</accessWidenerPath>
                 </configuration>
             </plugin>
+            <!-- Essential Loader requires Kotlin
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
@@ -213,6 +211,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
         </plugins>
     </build>
 

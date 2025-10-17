@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "prometheus",
-    "version": "1.3.0",
+    "version": "${project.version}",
     "environment": "client",
     "name": "Prometheus",
     "description": "The prometheus' patch for Essential Mod.",
@@ -17,25 +17,18 @@
     },
     "icon": "assets/prometheus/icon.png",
     "entrypoints": {
-      "afl:prePrePreLaunch": [
-        "studio.dreamys.prometheus.Prometheus"
-      ],
-      "preLaunch": [
-        "studio.dreamys.prometheus.Prometheus"
-      ]
+        "preLaunch": [
+            "studio.dreamys.prometheus.Prometheus"
+        ]
     },
-    "accessWidener": "prometheus.accessWidener",
     "depends": {
         "minecraft": ">=1.16.5",
         "java": ">=8",
-        "asmfabricloader": "*"
+        "essential-loader": "*"
     },
     "suggests": {
-      "essential": "*"
+      "essential-container": "*"
     },
-    "jars": [
-      { "file": "META-INF/jars/AsmFabricLoader-1.3.1.jar" }
-    ],
     "custom": {
         "modmenu": {
             "parent": {
