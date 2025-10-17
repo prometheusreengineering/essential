@@ -38,6 +38,21 @@ public class LoaderInternals {
         }
     }
 
+    public void addToClassLoader(URL url) {
+        try {
+            addToClassLoaderViaFabricLauncherBase(url);
+        } catch (Throwable t) {
+            logger.warn("Failed to add URL to classpath via FabricLauncherBase:", t);
+
+            try {
+                addToClassLoaderViaReflection(url);
+            } catch (Throwable t2) {
+                logger.warn("Failed to add URL to classpath via classloader reflection:", t2);
+                throw new RuntimeException("Failed to add jar to ClassLoader. See preceding exception(s).");
+            }
+        }
+    }
+
     public void addToClassLoaderViaFabricLauncherBase(URL url) {
         FabricLauncherBase.getLauncher().propose(url);
     }

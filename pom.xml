@@ -84,7 +84,28 @@
             <artifactId>essential-loader</artifactId>
             <version>1.2.5</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/essential-loader.jar</systemPath>
+            <systemPath>${project.basedir}/lib/essential-loader.mock.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>gg.essential</groupId>
+            <artifactId>essential-stage0</artifactId>
+            <version>1.0.0</version>
+            <type>system</type>
+            <systemPath>${project.basedir}/lib/essential-stage0.mock.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>gg.essential</groupId>
+            <artifactId>essential-stage1</artifactId>
+            <version>1.0.0</version>
+            <type>system</type>
+            <systemPath>${project.basedir}/lib/essential-stage1.mock.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>gg.essential</groupId>
+            <artifactId>essential-stage2</artifactId>
+            <version>1.6.6</version>
+            <type>system</type>
+            <systemPath>${project.basedir}/lib/essential-stage2.mock.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>de.florianmichael</groupId>
