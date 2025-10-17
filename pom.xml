@@ -66,6 +66,11 @@
             <artifactId>fabric-loader</artifactId>
             <version>0.16.14</version>
         </dependency>
+        <dependency>
+            <groupId>net.fabricmc</groupId>
+            <artifactId>access-widener</artifactId>
+            <version>2.1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>gg.essential</groupId>
@@ -115,6 +120,14 @@
                     <nonFilteredFileExtensions>
                         <nonFilteredFileExtension>jar</nonFilteredFileExtension>
                     </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.fabricmc</groupId>
+                <artifactId>access-widener</artifactId>
+                <version>2.1.0</version>
+                <configuration>
+                    <accessWidenerPath>src/main/resources/prometheus.accessWidener</accessWidenerPath>
                 </configuration>
             </plugin>
         </plugins>
