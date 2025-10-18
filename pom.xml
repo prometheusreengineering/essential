@@ -66,7 +66,6 @@
             <artifactId>fabric-loader</artifactId>
             <version>0.16.14</version>
         </dependency>
-
         <dependency>
             <groupId>gg.essential</groupId>
             <artifactId>essential</artifactId>
@@ -93,24 +92,6 @@
                         <addMavenDescriptor>false</addMavenDescriptor>
                         <manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
                     </archive>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.3.1</version>
-                <configuration>
-                    <nonFilteredFileExtensions>
-                        <nonFilteredFileExtension>jar</nonFilteredFileExtension>
-                    </nonFilteredFileExtensions>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>net.fabricmc</groupId>
-                <artifactId>access-widener</artifactId>
-                <version>2.1.0</version>
-                <configuration>
-                    <accessWidenerPath>src/main/resources/prometheus.accessWidener</accessWidenerPath>
                 </configuration>
             </plugin>
         </plugins>
