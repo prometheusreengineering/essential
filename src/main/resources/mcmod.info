@@ -2,7 +2,7 @@
     {
         "modid": "prometheus",
         "name": "Prometheus",
-        "description": "The prometheus' patch for Essential Mod.",
+        "description": "${project.description}",
         "version": "${project.version}",
         "authorList": [
             "dxxxxy",

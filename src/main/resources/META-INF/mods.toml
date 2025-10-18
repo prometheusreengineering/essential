@@ -6,7 +6,7 @@ license = "GPL-3.0"
 modId = "prometheus"
 version = "0.0.0" # not to be updated since the forge folks like to enforce strict versioning </3
 displayName = "Prometheus"
-description = "The prometheus' patch for Essential Mod."
+description = "${project.description}"
 logoFile = "assets/prometheus/icon.png"
 features = { java_version = "[8,)" }
 authors = ["dxxxxy", "Cootshk"]

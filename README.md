@@ -7,12 +7,9 @@ The prometheus' patch for Essential Mod.
 
 ## Features
 - Unlocks ALL cosmetics and emotes.
+- Dumps ALL cosmetics and emotes data into `.minecraft/prometheus/dumps/essential/`.
 - Lightweight and non-invasive.
-- Dumps cosmetics into minecraft logs.
 - Compatible with *almost* all versions of Essential Mod.
-
-### Known Issues
-- Patch does not apply on Fabric against the Essential Mod loader.
 
 ## Disclaimer
 This project is intended for educational purposes only. We are not responsible for any damage caused by this project.
