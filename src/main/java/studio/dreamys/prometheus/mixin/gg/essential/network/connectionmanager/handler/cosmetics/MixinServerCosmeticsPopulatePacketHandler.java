@@ -7,20 +7,19 @@ import gg.essential.cosmetics.model.Cosmetic;
 import gg.essential.network.connectionmanager.ConnectionManager;
 import gg.essential.network.connectionmanager.cosmetics.CosmeticsManager;
 import gg.essential.network.connectionmanager.handler.cosmetics.ServerCosmeticsPopulatePacketHandler;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import studio.dreamys.prometheus.Prometheus;
 
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 @Mixin(value = ServerCosmeticsPopulatePacketHandler.class, remap = false)
 public class MixinServerCosmeticsPopulatePacketHandler {
@@ -28,13 +27,13 @@ public class MixinServerCosmeticsPopulatePacketHandler {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Unique
-    private static final Logger logger = Prometheus.getLogger();
+    private static final Logger logger = Logger.getLogger("Prometheus");
 
     @SuppressWarnings("rawtypes")
     @Inject(method = "onHandle(Lgg/essential/network/connectionmanager/ConnectionManager;Lgg/essential/connectionmanager/common/packet/cosmetic/ServerCosmeticsPopulatePacket;)V", at = @At(value = "INVOKE", target = "Lgg/essential/cosmetics/model/Cosmetic;getType()Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void onHandle(ConnectionManager connectionManager, ServerCosmeticsPopulatePacket packet, CallbackInfo ci, CosmeticsManager cosmeticsManager, Iterator var4, Cosmetic cosmetic) {
         try {
-            logger.debug("Saving cosmetic {}\n{}", cosmetic.getId(), gson.toJson(cosmetic));
+            logger.fine(String.format("Saving cosmetic %s\n%s", cosmetic.getId(), gson.toJson(cosmetic)));
             String directoryPath = "prometheus/dumps/essential/" + cosmetic.getType();
             Path directory = java.nio.file.Paths.get(directoryPath);
             if (!Files.exists(directory)) {
@@ -44,7 +43,7 @@ public class MixinServerCosmeticsPopulatePacketHandler {
             String fileName = cosmetic.getId() + ".json";
             Path filePath = directory.resolve(fileName);
             if (Files.exists(filePath)) {
-                logger.debug("Cosmetic file {} already exists, overwriting", filePath.toString());
+                logger.fine(String.format("Cosmetic file %s already exists, overwriting", filePath));
                 Files.deleteIfExists(filePath);
             }
 
@@ -52,7 +51,7 @@ public class MixinServerCosmeticsPopulatePacketHandler {
             writer.write(gson.toJson(cosmetic));
             writer.close();
         } catch (Exception e) {
-            logger.error("Failed to save cosmetic {}", cosmetic.getId(), e);
+            logger.severe(String.format("Failed to save cosmetic %s\n%s", cosmetic.getId(), e.getMessage()));
         }
     }
 }

@@ -58,11 +58,6 @@
             <version>9.7.1</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>2.25.2</version>
-        </dependency>
-        <dependency>
             <groupId>net.fabricmc</groupId>
             <artifactId>fabric-loader</artifactId>
             <version>0.16.14</version>
