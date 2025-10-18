@@ -7,6 +7,7 @@ import org.spongepowered.asm.mixin.Mixins;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Prometheus implements PreLaunchEntrypoint {
@@ -21,7 +22,7 @@ public class Prometheus implements PreLaunchEntrypoint {
         try {
             chainLoadMixins();
         } catch (ReflectiveOperationException e) {
-            logger.severe(String.format("Failed to chain load mixins\n%s", e));
+            logger.log(Level.SEVERE, "Failed to chain load mixins", e);
         }
     }
 
