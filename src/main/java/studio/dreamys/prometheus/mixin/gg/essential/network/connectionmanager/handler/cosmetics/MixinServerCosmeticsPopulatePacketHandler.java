@@ -33,22 +33,23 @@ public class MixinServerCosmeticsPopulatePacketHandler {
     @SuppressWarnings("rawtypes")
     @Inject(method = "onHandle(Lgg/essential/network/connectionmanager/ConnectionManager;Lgg/essential/connectionmanager/common/packet/cosmetic/ServerCosmeticsPopulatePacket;)V", at = @At(value = "INVOKE", target = "Lgg/essential/cosmetics/model/Cosmetic;getType()Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void onHandle(ConnectionManager connectionManager, ServerCosmeticsPopulatePacket packet, CallbackInfo ci, CosmeticsManager cosmeticsManager, Iterator var4, Cosmetic cosmetic) {
-        logger.debug("Saving cosmetic {}\n{}", cosmetic.getId(), essential$gson.toJson(cosmetic));
-        // Save file
         try {
+            logger.debug("Saving cosmetic {}\n{}", cosmetic.getId(), gson.toJson(cosmetic));
             String directoryPath = "prometheus/dumps/essential/" + cosmetic.getType();
             Path directory = java.nio.file.Paths.get(directoryPath);
             if (!Files.exists(directory)) {
                 Files.createDirectories(directory);
             }
+
             String fileName = cosmetic.getId() + ".json";
             Path filePath = directory.resolve(fileName);
             if (Files.exists(filePath)) {
                 logger.debug("Cosmetic file {} already exists, overwriting", filePath.toString());
                 Files.deleteIfExists(filePath);
             }
+
             BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE);
-            writer.write(essential$gson.toJson(cosmetic));
+            writer.write(gson.toJson(cosmetic));
             writer.close();
         } catch (Exception e) {
             logger.error("Failed to save cosmetic {}", cosmetic.getId(), e);

@@ -42,6 +42,7 @@ public class Prometheus implements PreLaunchEntrypoint {
             select.invoke(processor, environment);
         }
     }
+
     public static Logger getLogger() {
         return logger;
     }
