@@ -1,28 +1,27 @@
 package studio.dreamys.prometheus;
 
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
 import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.Mixins;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 public class Prometheus implements PreLaunchEntrypoint {
-    private static final Logger logger = LogManager.getLogger("Prometheus");
+    private static final Logger logger = Logger.getLogger("Prometheus");
 
     @Override
     public void onPreLaunch() {
         MixinBootstrap.init();
         Mixins.addConfiguration("prometheus.mixins.json");
-        logger.debug("getUnvisitedCount() = {}", Mixins.getUnvisitedCount());
+        logger.fine(String.format("getUnvisitedCount() = %s", Mixins.getUnvisitedCount()));
 
         try {
             chainLoadMixins();
         } catch (ReflectiveOperationException e) {
-            logger.error("Failed to chain load mixins", e);
+            logger.severe(String.format("Failed to chain load mixins\n%s", e));
         }
     }
 
@@ -41,9 +40,5 @@ public class Prometheus implements PreLaunchEntrypoint {
             select.setAccessible(true);
             select.invoke(processor, environment);
         }
-    }
-
-    public static Logger getLogger() {
-        return logger;
     }
 }
