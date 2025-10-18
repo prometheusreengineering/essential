@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Mixin(value = ServerCosmeticsPopulatePacketHandler.class, remap = false)
@@ -51,7 +52,7 @@ public class MixinServerCosmeticsPopulatePacketHandler {
             writer.write(gson.toJson(cosmetic));
             writer.close();
         } catch (Exception e) {
-            logger.severe(String.format("Failed to save cosmetic %s\n%s", cosmetic.getId(), e.getMessage()));
+            logger.log(Level.SEVERE, String.format("Failed to save cosmetic %s", cosmetic.getId()), e);
         }
     }
 }
