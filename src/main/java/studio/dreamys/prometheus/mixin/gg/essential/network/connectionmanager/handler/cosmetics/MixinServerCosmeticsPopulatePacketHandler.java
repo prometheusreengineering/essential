@@ -19,7 +19,7 @@ import java.util.Iterator;
 @Mixin(value = ServerCosmeticsPopulatePacketHandler.class, remap = false)
 public class MixinServerCosmeticsPopulatePacketHandler {
     @Unique
-    private static final Gson essential$gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @SuppressWarnings("rawtypes")
     @Inject(method = "onHandle(Lgg/essential/network/connectionmanager/ConnectionManager;Lgg/essential/connectionmanager/common/packet/cosmetic/ServerCosmeticsPopulatePacket;)V", at = @At(value = "INVOKE", target = "Lgg/essential/cosmetics/model/Cosmetic;getType()Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILSOFT)

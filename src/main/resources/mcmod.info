@@ -6,7 +6,7 @@
         "version": "${project.version}",
         "authorList": [
             "dxxxxy",
-            "Cootshk",
+            "Cootshk"
         ],
         "logoFile": "assets/prometheus/icon.png"
     }

@@ -16,12 +16,18 @@
         "discord": "https://discord.gg/zXFKGhRKZQ"
     },
     "icon": "assets/prometheus/icon.png",
-    "mixins": [
-        "prometheus.mixins.json"
-    ],
+    "entrypoints": {
+        "preLaunch": [
+            "studio.dreamys.prometheus.Prometheus"
+        ]
+    },
     "depends": {
         "minecraft": ">=1.16.5",
-        "java": ">=8"
+        "java": ">=8",
+        "essential-loader": "*"
+    },
+    "suggests": {
+      "essential-container": "*"
     },
     "custom": {
         "modmenu": {
