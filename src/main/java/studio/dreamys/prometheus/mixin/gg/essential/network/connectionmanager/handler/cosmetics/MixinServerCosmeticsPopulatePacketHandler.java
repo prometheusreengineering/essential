@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import java.io.BufferedWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -36,7 +37,7 @@ public class MixinServerCosmeticsPopulatePacketHandler {
         try {
             logger.fine(String.format("Saving cosmetic %s\n%s", cosmetic.getId(), gson.toJson(cosmetic)));
             String directoryPath = "prometheus/dumps/essential/" + cosmetic.getType();
-            Path directory = java.nio.file.Paths.get(directoryPath);
+            Path directory = Paths.get(directoryPath);
             if (!Files.exists(directory)) {
                 Files.createDirectories(directory);
             }
