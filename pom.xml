@@ -65,7 +65,7 @@
         <dependency>
             <groupId>gg.essential</groupId>
             <artifactId>essential</artifactId>
-            <version>1.3.9.2</version>
+            <version>1.3.10.4</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/essential.mock.jar</systemPath>
         </dependency>
