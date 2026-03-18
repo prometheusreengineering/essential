@@ -16,9 +16,7 @@ public class Prometheus implements PreLaunchEntrypoint {
     @Override
     public void onPreLaunch() {
         MixinBootstrap.init();
-        Mixins.addConfiguration("prometheus.mixins.json");
-        logger.fine(String.format("getUnvisitedCount() = %s", Mixins.getUnvisitedCount()));
-
+        Mixins.addConfiguration("prometheus.essential.mixins.json");
         try {
             chainLoadMixins();
         } catch (ReflectiveOperationException e) {
@@ -29,6 +27,7 @@ public class Prometheus implements PreLaunchEntrypoint {
     //https://github.com/EssentialGG/EssentialLoader/blob/master/stage2/fabric/src/main/java/gg/essential/loader/stage2/EssentialLoader.java#L180
     public static void chainLoadMixins() throws ReflectiveOperationException {
         if (Mixins.getUnvisitedCount() != 0) {
+            logger.warning(String.format("Mixins.getUnvisitedCount() = %s", Mixins.getUnvisitedCount()));
             MixinEnvironment environment = MixinEnvironment.getDefaultEnvironment();
             Object transformer = environment.getActiveTransformer();
 

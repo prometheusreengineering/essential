@@ -3,7 +3,7 @@ loaderVersion = "[25,)"
 license = "GPL-3.0"
 
 [[mods]]
-modId = "prometheus"
+modId = "prometheus-essential"
 version = "0.0.0" # not to be updated since the forge folks like to enforce strict versioning </3
 displayName = "Prometheus"
 description = "${project.description}"
@@ -11,13 +11,13 @@ logoFile = "assets/prometheus/icon.png"
 features = { java_version = "[8,)" }
 authors = ["dxxxxy", "Cootshk"]
 
-[[dependencies.prometheus]]
+[[dependencies.prometheus-essential]]
 modId = "forge"
 mandatory = true
 versionRange = "[25,)"
 side = "CLIENT"
 
-[[dependencies.prometheus]]
+[[dependencies.prometheus-essential]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.13,)"

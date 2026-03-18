@@ -4,4 +4,4 @@ ForceLoadAsMod: true
 FMLCorePluginContainsFMLMod: true
 TweakClass: org.spongepowered.asm.launch.MixinTweaker
 TweakOrder: 0
-MixinConfigs: prometheus.mixins.json
+MixinConfigs: prometheus.essential.mixins.json
