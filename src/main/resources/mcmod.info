@@ -1,6 +1,6 @@
 [
     {
-        "modid": "prometheus",
+        "modid": "prometheus-essential",
         "name": "Prometheus",
         "description": "${project.description}",
         "version": "${project.version}",
