@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 
 @Mixin(value = ServerCosmeticsPopulatePacketHandler.class, remap = false)
 public class MixinServerCosmeticsPopulatePacketHandler {
+
     @Unique
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -35,25 +36,18 @@ public class MixinServerCosmeticsPopulatePacketHandler {
     @Inject(method = "onHandle(Lgg/essential/network/connectionmanager/ConnectionManager;Lgg/essential/connectionmanager/common/packet/cosmetic/ServerCosmeticsPopulatePacket;)V", at = @At(value = "INVOKE", target = "Lgg/essential/cosmetics/model/Cosmetic;getType()Ljava/lang/String;"), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void onHandle(ConnectionManager connectionManager, ServerCosmeticsPopulatePacket packet, CallbackInfo ci, CosmeticsManager cosmeticsManager, Iterator var4, Cosmetic cosmetic) {
         try {
-            logger.fine(String.format("Saving cosmetic %s\n%s", cosmetic.getId(), gson.toJson(cosmetic)));
-            String directoryPath = "prometheus/dumps/essential/" + cosmetic.getType();
-            Path directory = Paths.get(directoryPath);
-            if (!Files.exists(directory)) {
+            Path directory = Paths.get("prometheus/dumps/essential/" + cosmetic.getType());
+            if (!Files.exists(directory))
                 Files.createDirectories(directory);
-            }
 
-            String fileName = cosmetic.getId() + ".json";
-            Path filePath = directory.resolve(fileName);
-            if (Files.exists(filePath)) {
-                logger.fine(String.format("Cosmetic file %s already exists, overwriting", filePath));
-                Files.deleteIfExists(filePath);
-            }
+            Path filePath = directory.resolve(cosmetic.getId() + ".json");
+            Files.deleteIfExists(filePath);
 
             BufferedWriter writer = Files.newBufferedWriter(filePath, StandardOpenOption.CREATE);
             writer.write(gson.toJson(cosmetic));
             writer.close();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, String.format("Failed to save cosmetic %s", cosmetic.getId()), e);
+            logger.log(Level.SEVERE, "Failed to save cosmetic " + cosmetic.getId(), e);
         }
     }
 }

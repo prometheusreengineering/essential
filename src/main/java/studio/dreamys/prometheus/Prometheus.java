@@ -11,13 +11,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Prometheus implements PreLaunchEntrypoint {
+
     private static final Logger logger = Logger.getLogger("Prometheus");
 
     @Override
     public void onPreLaunch() {
         MixinBootstrap.init();
         Mixins.addConfiguration("prometheus.mixins.json");
-        logger.fine(String.format("getUnvisitedCount() = %s", Mixins.getUnvisitedCount()));
 
         try {
             chainLoadMixins();
@@ -26,20 +26,18 @@ public class Prometheus implements PreLaunchEntrypoint {
         }
     }
 
-    //https://github.com/EssentialGG/EssentialLoader/blob/master/stage2/fabric/src/main/java/gg/essential/loader/stage2/EssentialLoader.java#L180
     public static void chainLoadMixins() throws ReflectiveOperationException {
-        if (Mixins.getUnvisitedCount() != 0) {
-            MixinEnvironment environment = MixinEnvironment.getDefaultEnvironment();
-            Object transformer = environment.getActiveTransformer();
+        if (Mixins.getUnvisitedCount() == 0) return;
 
-            Field processorField = transformer.getClass().getDeclaredField("processor");
-            processorField.setAccessible(true);
+        MixinEnvironment environment = MixinEnvironment.getDefaultEnvironment();
+        Object transformer = environment.getActiveTransformer();
 
-            Object processor = processorField.get(transformer);
+        Field processorField = transformer.getClass().getDeclaredField("processor");
+        processorField.setAccessible(true);
+        Object processor = processorField.get(transformer);
 
-            Method select = processor.getClass().getDeclaredMethod("select", MixinEnvironment.class);
-            select.setAccessible(true);
-            select.invoke(processor, environment);
-        }
+        Method select = processor.getClass().getDeclaredMethod("select", MixinEnvironment.class);
+        select.setAccessible(true);
+        select.invoke(processor, environment);
     }
 }
